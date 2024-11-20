@@ -6,11 +6,11 @@ execute:
   echo: true
 
 book:
-  title: "YOUR PROJECT TITLE"
+  title: "Boston 311 Service Requests"
   author:
-    - AUTHOR1 (UNI1)
-    - AUTHOR2 (UNI2)
-  repo-url: https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME
+    - Shaifali Choudhary (sc5609)
+    - Andy Jiaming Yang (ajy2126)
+  repo-url: https://github.com/shaifalic15/Boston-311-Service-Requests
   date: today
   page-footer:
     right: |
