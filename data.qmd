@@ -5,3 +5,17 @@
 For this project, we are using the latest Boston 311 Service Requests dataset of year 2024, which is publicly available on the Boston.gov open data portal. This dataset is maintained by the City of Boston and contains detailed records of non-emergency service requests submitted by residents through the city's 311 system. The data includes fields such as request types, submission dates, locations, statuses, and resolution times, offering a comprehensive view of the city's service management. The dataset is updated regularly, ensuring it reflects current trends, although the exact frequency of updates is not explicitly specified It is provided in a tabular format, accessible as a CSV file, and includes both categorical and geographic data, such as latitude, longitude, and neighborhood identifiers. One potential challenge is the presence of missing or inconsistent data, particularly in fields like "closure reason" or "submitted photo," which will require preprocessing. I plan to import the dataset into RStudio using the read.csv function for cleaning and analysis. The dataset can be accessed from its original source at [Boston 311 Service Requests](https://data.boston.gov/dataset/311-service-requests) with the year 2024.
 
 ## Missing value analysis
+
+```{r}
+# load packages and read in data
+
+library(readr)
+df <- read_csv('/Users/andyyang/desktop/EDAV/boston311.csv')
+head(df)
+
+```
+
+
+```{r}
+
+```
