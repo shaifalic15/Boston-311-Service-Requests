@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Boston 311 Service Requests",
     "section": "",
-    "text": "1 Introduction",
+    "text": "1 Introduction\nTopic: Boston 311 Service Requests\nWe chose the Boston 311 Service Requests topic because it offers a unique window into how a city addresses everyday challenges faced by its residents. From potholes to noise complaints, this data captures the pulse of Boston’s public services and the issues that matter most to its communities. By analyzing Boston 311 Service Requests dataset, we aim to uncover patterns in the types of service requests, their geographical distribution, and how efficiently they are resolved. For readers unfamiliar with 311 systems, they serve as a vital link between residents and city departments, enabling people to report non-emergency issues and request services. Exploring this data not only highlights the responsiveness of urban governance but also sheds light on potential areas for improvement in delivering public services effectively.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
@@ -14,7 +14,7 @@
     "href": "data.html",
     "title": "2  Data",
     "section": "",
-    "text": "2.1 Description",
+    "text": "2.1 Description\nFor this project, we are using the latest Boston 311 Service Requests dataset of year 2024, which is publicly available on the Boston.gov open data portal. This dataset is maintained by the City of Boston and contains detailed records of non-emergency service requests submitted by residents through the city’s 311 system. The data includes fields such as request types, submission dates, locations, statuses, and resolution times, offering a comprehensive view of the city’s service management. The dataset is updated regularly, ensuring it reflects current trends, although the exact frequency of updates is not explicitly specified It is provided in a tabular format, accessible as a CSV file, and includes both categorical and geographic data, such as latitude, longitude, and neighborhood identifiers. One potential challenge is the presence of missing or inconsistent data, particularly in fields like “closure reason” or “submitted photo,” which will require preprocessing. I plan to import the dataset into RStudio using the read.csv function for cleaning and analysis. The dataset can be accessed from its original source at Boston 311 Service Requests with the year 2024.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
