@@ -6,6 +6,7 @@ For this project, we are using the latest Boston 311 Service Requests dataset of
 
 ## Missing value analysis
 
+
 ```{r}
 # load packages and read in data
 
@@ -14,12 +15,6 @@ library(dplyr)
 library(ggplot2)
 library(tidyverse)
 df <- read_csv('/Users/andyyang/desktop/EDAV/boston311.csv')
-dim(df)
-
-```
-
-
-```{r}
 
 # pivot and calculate the number of missing values per variable
 missing_percent <- df %>%
