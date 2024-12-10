@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -148,6 +211,275 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load packages and data</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ggplot2' was built under R version 4.2.3</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2
+──</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ tibble  3.2.1     ✔ stringr 1.5.0
+✔ tidyr   1.3.1     ✔ forcats 0.5.2
+✔ purrr   1.0.1     </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.2.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: timechange
+
+Attaching package: 'lubridate'
+
+The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">'/Users/andyyang/desktop/EDAV/boston311.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 274415 Columns: 30
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (20): on_time, case_status, closure_reason, case_title, subject, reason...
+dbl   (6): case_enquiry_id, fire_district, city_council_district, neighborho...
+lgl   (1): submitted_photo
+dttm  (3): open_dt, sla_target_dt, closed_dt
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(df) <span class="co">#274415 rows x 30 cols</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 274415     30</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(df) <span class="co"># see dtypes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [274,415 × 30] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ case_enquiry_id               : num [1:274415] 1.01e+11 1.01e+11 1.01e+11 1.01e+11 1.01e+11 ...
+ $ open_dt                       : POSIXct[1:274415], format: "2024-01-03 09:58:13" "2024-01-01 01:09:00" ...
+ $ sla_target_dt                 : POSIXct[1:274415], format: "2024-01-04 09:58:15" NA ...
+ $ closed_dt                     : POSIXct[1:274415], format: "2024-01-03 22:59:11" "2024-01-17 02:51:46" ...
+ $ on_time                       : chr [1:274415] "ONTIME" "ONTIME" "ONTIME" "ONTIME" ...
+ $ case_status                   : chr [1:274415] "Closed" "Closed" "Closed" "Closed" ...
+ $ closure_reason                : chr [1:274415] "Case Closed. Closed date : Thu Jan 04 03:59:11 EST 2024 Resolved" "Case Closed Case Noted" "Case Closed. Closed date : Tue Jan 02 01:22:36 EST 2024 Noted Cited for overloaded barrels and improper storage"| __truncated__ "Case Closed. Closed date : Mon Jan 01 17:59:25 EST 2024 Resolved Crew checked pole for damage from MVA pole was"| __truncated__ ...
+ $ case_title                    : chr [1:274415] "Requests for Street Cleaning" "Police: Full Notifications" "Poor Conditions of Property" "Street Light Knock Downs" ...
+ $ subject                       : chr [1:274415] "Public Works Department" "Mayor's 24 Hour Hotline" "Public Works Department" "Public Works Department" ...
+ $ reason                        : chr [1:274415] "Street Cleaning" "Notification" "Code Enforcement" "Street Lights" ...
+ $ type                          : chr [1:274415] "Requests for Street Cleaning" "Notification" "Poor Conditions of Property" "Street Light Knock Downs" ...
+ $ queue                         : chr [1:274415] "PWDx_District 1C: Downtown" "INFO09_Current Events" "PWDx_Code Enforcement" "PWDx_Street Light Knock Downs" ...
+ $ department                    : chr [1:274415] "PWDx" "INFO" "PWDx" "PWDx" ...
+ $ submitted_photo               : logi [1:274415] NA NA NA NA NA NA ...
+ $ closed_photo                  : chr [1:274415] NA NA "https://spot-boston-res.cloudinary.com/image/upload/v1704176553/boston/production/xxc2arwxlvn1vtoscdcf.jpg#spot"| __truncated__ "https://spot-boston-res.cloudinary.com/image/upload/v1704149959/boston/production/o2clwi71vaodxfrsrrio.jpg#spot"| __truncated__ ...
+ $ location                      : chr [1:274415] "1661 Washington St  Roxbury  MA  02118" "34 High St  Dorchester  MA  02122" "175 W Eighth St  South Boston  MA  02127" "1398 River St  Hyde Park  MA  02136" ...
+ $ fire_district                 : num [1:274415] 4 7 6 12 12 11 7 7 6 NA ...
+ $ pwd_district                  : chr [1:274415] "1C" "03" "05" "08" ...
+ $ city_council_district         : num [1:274415] 7 3 2 5 6 9 4 4 2 NA ...
+ $ police_district               : chr [1:274415] "D4" "C11" "C6" "E18" ...
+ $ neighborhood                  : chr [1:274415] "Roxbury" "Dorchester" "South Boston / South Boston Waterfront" "Hyde Park" ...
+ $ neighborhood_services_district: num [1:274415] 6 8 5 10 12 15 8 8 5 NA ...
+ $ ward                          : chr [1:274415] "09" "Ward 15" "Ward 7" "Ward 18" ...
+ $ precinct                      : chr [1:274415] "0902" "1504" "0705" "1819" ...
+ $ location_street_name          : chr [1:274415] "1661 Washington St" "34 High St" "175 W Eighth St" "1398 River St" ...
+ $ location_zipcode              : chr [1:274415] "02118" "02122" "02127" "02136" ...
+ $ latitude                      : num [1:274415] 42.3 42.3 42.3 42.3 42.3 ...
+ $ longitude                     : num [1:274415] -71.1 -71.1 -71.1 -71.1 -71.2 ...
+ $ geom_4326                     : chr [1:274415] "0101000020E6100000C908B186D3C451C06B35D24A402B4540" "0101000020E61000004F2BFF0DEAC351C03D2AEF588A274540" "0101000020E610000051D170CE5DC351C0F565068CBD2A4540" "0101000020E6100000467D46203DC851C0AB7192747F204540" ...
+ $ source                        : chr [1:274415] "Citizens Connect App" "Constituent Call" "Citizens Connect App" "Constituent Call" ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   case_enquiry_id = col_double(),
+  ..   open_dt = col_datetime(format = ""),
+  ..   sla_target_dt = col_datetime(format = ""),
+  ..   closed_dt = col_datetime(format = ""),
+  ..   on_time = col_character(),
+  ..   case_status = col_character(),
+  ..   closure_reason = col_character(),
+  ..   case_title = col_character(),
+  ..   subject = col_character(),
+  ..   reason = col_character(),
+  ..   type = col_character(),
+  ..   queue = col_character(),
+  ..   department = col_character(),
+  ..   submitted_photo = col_logical(),
+  ..   closed_photo = col_character(),
+  ..   location = col_character(),
+  ..   fire_district = col_double(),
+  ..   pwd_district = col_character(),
+  ..   city_council_district = col_double(),
+  ..   police_district = col_character(),
+  ..   neighborhood = col_character(),
+  ..   neighborhood_services_district = col_double(),
+  ..   ward = col_character(),
+  ..   precinct = col_character(),
+  ..   location_street_name = col_character(),
+  ..   location_zipcode = col_character(),
+  ..   latitude = col_double(),
+  ..   longitude = col_double(),
+  ..   geom_4326 = col_character(),
+  ..   source = col_character()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 30
+  case_enquiry_id open_dt             sla_target_dt       closed_dt          
+            &lt;dbl&gt; &lt;dttm&gt;              &lt;dttm&gt;              &lt;dttm&gt;             
+1    101005234930 2024-01-03 09:58:13 2024-01-04 09:58:15 2024-01-03 22:59:11
+2    101005231570 2024-01-01 01:09:00 NA                  2024-01-17 02:51:46
+3    101005231577 2024-01-01 01:50:07 2024-01-05 03:30:00 2024-01-01 20:22:36
+4    101005231583 2024-01-01 02:38:00 2024-01-03 03:30:00 2024-01-01 12:59:25
+5    101005231634 2024-01-01 03:56:00 2024-01-03 03:30:00 2024-01-01 05:16:09
+6    101005231642 2024-01-01 04:05:24 2024-01-03 03:30:00 2024-01-01 05:21:19
+# ℹ 26 more variables: on_time &lt;chr&gt;, case_status &lt;chr&gt;, closure_reason &lt;chr&gt;,
+#   case_title &lt;chr&gt;, subject &lt;chr&gt;, reason &lt;chr&gt;, type &lt;chr&gt;, queue &lt;chr&gt;,
+#   department &lt;chr&gt;, submitted_photo &lt;lgl&gt;, closed_photo &lt;chr&gt;,
+#   location &lt;chr&gt;, fire_district &lt;dbl&gt;, pwd_district &lt;chr&gt;,
+#   city_council_district &lt;dbl&gt;, police_district &lt;chr&gt;, neighborhood &lt;chr&gt;,
+#   neighborhood_services_district &lt;dbl&gt;, ward &lt;chr&gt;, precinct &lt;chr&gt;,
+#   location_street_name &lt;chr&gt;, location_zipcode &lt;chr&gt;, latitude &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cleaning</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># From our missing value analysis, since submitted_photo and closedphoto column do not contain many non-null values, let’s drop them</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="sc">-</span>submitted_photo, <span class="sc">-</span>closed_photo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duration_hours =</span> <span class="fu">as.numeric</span>(<span class="fu">difftime</span>(closed_dt, open_dt, <span class="at">units =</span> <span class="st">"hours"</span>)),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_duration =</span> <span class="fu">log1p</span>(duration_hours)) <span class="co"># log1p handles log(1 + x) to deal with 0 values</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># these are LOG TRANSFORMED durations</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> log_duration)) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Histogram of Log-Transformed Case Durations"</span>,</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Log-transformed Duration (log(hours + 1))"</span>,</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Frequency"</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">log1p</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">50</span>, <span class="dv">100</span>)),</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">50</span>, <span class="dv">100</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 54921 rows containing non-finite outside the scale range
+(`stat_bin()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/graph 1- histogram of case duration-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Trimodal, relabled with original units, see modes at 0.5, 15, and 100 hour long cases.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(reason) <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>, n) <span class="sc">|&gt;</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reason =</span> <span class="fu">fct_reorder</span>(reason, n)) <span class="sc">|&gt;</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> reason, <span class="at">y =</span> n)) <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Top 10 Reasons for 311 Service Requests"</span>,</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Reason"</span>,</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Requests"</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/graph2- top reasons barplot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Insert analysis here</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>open_d <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(df<span class="sc">$</span>open_dt, <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>) </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>df_monthly <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">floor_date</span>(open_d, <span class="st">"month"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(month) <span class="sc">|&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">request_count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_monthly, <span class="fu">aes</span>(<span class="at">x =</span> month, <span class="at">y =</span> request_count)) <span class="sc">+</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">"1 month"</span>, <span class="at">date_labels =</span> <span class="st">"%b %Y"</span>) <span class="sc">+</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Number of Requests by Month"</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Month"</span>,</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Number of Requests"</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/graph3--1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Analysis here</p>
 
 
 

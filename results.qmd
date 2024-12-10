@@ -1,1 +1,97 @@
 # Results
+
+
+```{r}
+# Load packages and data
+
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+library(lubridate)
+df <- read_csv('/Users/andyyang/desktop/EDAV/boston311.csv')
+dim(df) #274415 rows x 30 cols
+str(df) # see dtypes
+head(df)
+```
+
+
+
+
+```{r}
+# Cleaning
+
+# From our missing value analysis, since submitted_photo and closedphoto column do not contain many non-null values, let’s drop them
+df <- df |> select(-submitted_photo, -closed_photo)
+```
+
+
+```{r graph 1: histogram of case duration}
+
+df <- df |>
+  mutate(duration_hours = as.numeric(difftime(closed_dt, open_dt, units = "hours")),
+         log_duration = log1p(duration_hours)) # log1p handles log(1 + x) to deal with 0 values
+
+# these are LOG TRANSFORMED durations
+ggplot(df, aes(x = log_duration)) +
+  geom_histogram(binwidth = 0.2, fill = "lightblue", color = "black") +
+  labs(
+    title = "Histogram of Log-Transformed Case Durations",
+    x = "Log-transformed Duration (log(hours + 1))",
+    y = "Frequency"
+  ) +
+  scale_x_continuous(
+    breaks = log1p(c(0.5, 2, 5, 10, 15, 50, 100)),
+    labels = c(0.5, 2, 5, 10, 15, 50, 100)
+  ) +
+  theme_minimal()
+
+
+```
+Trimodal, relabled with original units, see modes at 0.5, 15, and 100 hour long cases.
+
+```{r graph2: top reasons barplot}
+df |>
+  group_by(reason) |>
+  summarize(n = n()) |>
+  top_n(10, n) |>
+  mutate(reason = fct_reorder(reason, n)) |>
+  ggplot(aes(x = reason, y = n)) +
+  geom_col(fill = "blue") +
+  coord_flip() +
+  labs(
+    title = "Top 10 Reasons for 311 Service Requests",
+    x = "Reason",
+    y = "Count of Requests"
+  ) +
+  theme_minimal()
+
+
+
+```
+Insert analysis here
+
+```{r graph3:}
+df$open_d <- as.Date(df$open_dt, format = "%Y-%m-%d") 
+
+
+df_monthly <- df |>
+  mutate(month = floor_date(open_d, "month")) |>
+  group_by(month) |>
+  summarize(request_count = n(), .groups = "drop")
+
+ggplot(df_monthly, aes(x = month, y = request_count)) +
+  geom_line(color = "blue") +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") +
+  labs(
+    title = "Number of Requests by Month",
+    x = "Month",
+    y = "Number of Requests"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+```
+Analysis here
