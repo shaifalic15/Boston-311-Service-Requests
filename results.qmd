@@ -27,7 +27,7 @@ A few other other columns (closure_reason, location_zipcode, sla_target_dt) have
 
 What remains are columns with a very low percentage of missing values (~1%), and a comprehensive dataset.
 
-## Number of requests by season, months, days of the week, and hours of the day (line, heatmap)
+## When Do Residents Report Issues?
 
 We begin our analysis by investigating any seasonal trends in the number of 311 requests made.
 
@@ -69,7 +69,7 @@ df$hour <- hour(df$open_dt)
 df$day_of_week <- factor(df$day_of_week, levels = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"))
 df$day_of_week <- fct_rev(df$day_of_week)
 
-heat_data <- df %>%
+heat_data <- df |>
   count(day_of_week, hour)
 
 ggplot(heat_data, aes(x = hour, y = day_of_week, fill = n)) +
@@ -84,7 +84,9 @@ The requests appear to be more concentrated during early mornings of weekdays, s
 
 Understanding when residents engage with the 311 system provides valuable insight into the timing of service needs. However, to gain a deeper understanding of the issues themselves, we can analyze the reasons behind these requests.
 
-## Exploration of request reasons (bar)
+## What Are Boston Residents Reporting?
+
+
 
 ```{r graph2: top reasons barplot}
 #| warning: false
@@ -115,23 +117,23 @@ This allows us to create the following alluvial diagram, showing how a "reason" 
 #| warning: false
 
 
-top_5_reasons <- df %>%
-  count(reason, sort = TRUE) %>%
-  slice_max(n = 5, order_by = n) %>%
+top_5_reasons <- df |>
+  count(reason, sort = TRUE) |>
+  slice_max(n = 5, order_by = n) |>
   pull(reason)
 
-df_top5 <- df %>%
+df_top5 <- df |>
   filter(reason %in% top_5_reasons)
 
-top_10_types <- df_top5 %>%
-  count(type, sort = TRUE) %>%
-  slice_max(n = 10, order_by = n) %>%
+top_10_types <- df_top5 |>
+  count(type, sort = TRUE) |>
+  slice_max(n = 10, order_by = n) |>
   pull(type)
 
-df_aggregated <- df_top5 %>%
+df_aggregated <- df_top5 |>
   mutate(type = ifelse(type %in% top_10_types, type, "Other"))
 
-reason_type_counts <- df_aggregated %>%
+reason_type_counts <- df_aggregated |>
   count(reason, type)
 
 # Then plot as before
@@ -179,12 +181,12 @@ selected_reasons <- c(
                       "Park Maintenance & Safety")
 
 # only the selected reasons
-df_filtered <- df %>%
+df_filtered <- df |>
   filter(reason %in% selected_reasons)
 
-df_monthly <- df_filtered %>%
-  mutate(month = floor_date(open_dt, "month")) %>%
-  group_by(reason, month) %>%
+df_monthly <- df_filtered |>
+  mutate(month = floor_date(open_dt, "month")) |>
+  group_by(reason, month) |>
   summarize(request_count = n(), .groups = "drop")
 
 df_monthly$month = as.Date(df_monthly$month, format = "%Y-%m-%d") 
@@ -226,13 +228,14 @@ Highway Maintenance requests, on the other hand, peak in the spring. This trend 
 In contrast, the Graffiti and Signs & Signals categories maintain relatively stable request volumes throughout the year. Switching gears a bit, let's explore how long each request takes to be resolved.
 
 
-## Resolution times
+## How Long Does It Take to Resolve Issues?
+
 
 ```{r}
 #| warning: false
 
 
-df <- df %>%
+df <- df |>
   mutate(duration_hours = as.numeric(difftime(closed_dt, open_dt, units = "hours")),
          log_duration = log1p(duration_hours)) 
 
@@ -260,30 +263,30 @@ The transformed distribution exhibits a tri-modal pattern, with distinct peaks a
 ```{r fig.width=10, fig.height=9}
 #| warning: false
 
-df <- df %>%
+df <- df |>
   mutate(duration_category = case_when(
     duration_hours < 2 ~ "< 2 Hours",
     duration_hours >= 2 & duration_hours <= 24 ~ "2-24 Hours",
     duration_hours > 24 ~ "> 24 Hours"
-  )) %>%
+  )) |>
   mutate(duration_category = factor(duration_category, 
                                     levels = c("< 2 Hours", "2-24 Hours", "> 24 Hours")))
 
 
 
 # 2. Identify the top 5 reasons within each duration category
-top_reasons <- df %>%
-  group_by(duration_category, reason) %>%      # Group by both category and reason
-  summarise(count = n(), .groups = 'drop') %>% # Count occurrences
-  arrange(duration_category, desc(count)) %>%  # Arrange for descending counts
-  group_by(duration_category) %>%
-  slice_max(order_by = count, n = 5) %>%       # Select top 5 per category
+top_reasons <- df |>
+  group_by(duration_category, reason) |>      # Group by both category and reason
+  summarise(count = n(), .groups = 'drop') |> # Count occurrences
+  arrange(duration_category, desc(count)) |>  # Arrange for descending counts
+  group_by(duration_category) |>
+  slice_max(order_by = count, n = 5) |>       # Select top 5 per category
   ungroup()
 
 # Optional: Ensure that 'reason' is a factor with levels ordered by count within each category
-top_reasons <- top_reasons %>%
-  group_by(duration_category) %>%
-  mutate(reason = fct_reorder(reason, count)) %>%
+top_reasons <- top_reasons |>
+  group_by(duration_category) |>
+  mutate(reason = fct_reorder(reason, count)) |>
   ungroup()
 
 # 3. Create the faceted bar chart
@@ -314,16 +317,17 @@ In the over 24 hours category, Enforcement & Abandoned Vehicles remains the most
 
 Let's switch gears a bit, and explore where, on a map, these requests are actually made to.
 
-## Neighborhoods
+## Where Are Requests Coming From?
+
 
 ```{r}
 #| warning: false
 
-requests_by_nh <- df %>%
-  group_by(neighborhood) %>%
+requests_by_nh <- df |>
+  group_by(neighborhood) |>
   summarize(request_count = n())
 
-requests_by_nh <- requests_by_nh %>%
+requests_by_nh <- requests_by_nh |>
   mutate(neighborhood = case_when(
     neighborhood == "Allston / Brighton" ~ "Brighton",
     neighborhood == "Fenway / Kenmore / Audubon Circle / Longwood" ~ "Fenway",
@@ -335,9 +339,9 @@ boston_geo <- st_read("~/Desktop/EDAV/Boston_Neighborhoods.geojson", quiet = TRU
 
 # Make all geometries valid
 boston_geo <- st_make_valid(boston_geo)
-boston_geo <- boston_geo %>% rename(neighborhood = Name)
+boston_geo <- boston_geo |> rename(neighborhood = Name)
 
-boston_geo_joined <- boston_geo %>%
+boston_geo_joined <- boston_geo |>
   left_join(requests_by_nh, by = "neighborhood")
 
 

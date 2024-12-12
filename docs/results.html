@@ -184,10 +184,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#data-cleaning" id="toc-data-cleaning" class="nav-link active" data-scroll-target="#data-cleaning"><span class="header-section-number">3.1</span> Data Cleaning</a></li>
-  <li><a href="#number-of-requests-by-season-months-days-of-the-week-and-hours-of-the-day-line-heatmap" id="toc-number-of-requests-by-season-months-days-of-the-week-and-hours-of-the-day-line-heatmap" class="nav-link" data-scroll-target="#number-of-requests-by-season-months-days-of-the-week-and-hours-of-the-day-line-heatmap"><span class="header-section-number">3.2</span> Number of requests by season, months, days of the week, and hours of the day (line, heatmap)</a></li>
-  <li><a href="#exploration-of-request-reasons-bar" id="toc-exploration-of-request-reasons-bar" class="nav-link" data-scroll-target="#exploration-of-request-reasons-bar"><span class="header-section-number">3.3</span> Exploration of request reasons (bar)</a></li>
-  <li><a href="#resolution-times" id="toc-resolution-times" class="nav-link" data-scroll-target="#resolution-times"><span class="header-section-number">3.4</span> Resolution times</a></li>
-  <li><a href="#neighborhoods" id="toc-neighborhoods" class="nav-link" data-scroll-target="#neighborhoods"><span class="header-section-number">3.5</span> Neighborhoods</a></li>
+  <li><a href="#when-do-residents-report-issues" id="toc-when-do-residents-report-issues" class="nav-link" data-scroll-target="#when-do-residents-report-issues"><span class="header-section-number">3.2</span> When Do Residents Report Issues?</a></li>
+  <li><a href="#what-are-boston-residents-reporting" id="toc-what-are-boston-residents-reporting" class="nav-link" data-scroll-target="#what-are-boston-residents-reporting"><span class="header-section-number">3.3</span> What Are Boston Residents Reporting?</a></li>
+  <li><a href="#how-long-does-it-take-to-resolve-issues" id="toc-how-long-does-it-take-to-resolve-issues" class="nav-link" data-scroll-target="#how-long-does-it-take-to-resolve-issues"><span class="header-section-number">3.4</span> How Long Does It Take to Resolve Issues?</a></li>
+  <li><a href="#where-are-requests-coming-from" id="toc-where-are-requests-coming-from" class="nav-link" data-scroll-target="#where-are-requests-coming-from"><span class="header-section-number">3.5</span> Where Are Requests Coming From?</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/shaifalic15/Boston-311-Service-Requests/edit/main/results.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/shaifalic15/Boston-311-Service-Requests/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -242,8 +242,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A few other other columns (closure_reason, location_zipcode, sla_target_dt) have around 20% null values, we choose to drop these too as they will not interfere with our analysis.</p>
 <p>What remains are columns with a very low percentage of missing values (~1%), and a comprehensive dataset.</p>
 </section>
-<section id="number-of-requests-by-season-months-days-of-the-week-and-hours-of-the-day-line-heatmap" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="number-of-requests-by-season-months-days-of-the-week-and-hours-of-the-day-line-heatmap"><span class="header-section-number">3.2</span> Number of requests by season, months, days of the week, and hours of the day (line, heatmap)</h2>
+<section id="when-do-residents-report-issues" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="when-do-residents-report-issues"><span class="header-section-number">3.2</span> When Do Residents Report Issues?</h2>
 <p>We begin our analysis by investigating any seasonal trends in the number of 311 requests made.</p>
 <div class="cell">
 <details class="code-fold">
@@ -287,7 +287,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>day_of_week <span class="ot">&lt;-</span> <span class="fu">factor</span>(df<span class="sc">$</span>day_of_week, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Sun"</span>, <span class="st">"Mon"</span>, <span class="st">"Tue"</span>, <span class="st">"Wed"</span>, <span class="st">"Thu"</span>, <span class="st">"Fri"</span>, <span class="st">"Sat"</span>))</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>day_of_week <span class="ot">&lt;-</span> <span class="fu">fct_rev</span>(df<span class="sc">$</span>day_of_week)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>heat_data <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>heat_data <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(day_of_week, hour)</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(heat_data, <span class="fu">aes</span>(<span class="at">x =</span> hour, <span class="at">y =</span> day_of_week, <span class="at">fill =</span> n)) <span class="sc">+</span></span>
@@ -308,8 +308,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The requests appear to be more concentrated during early mornings of weekdays, suggesting that most issues reported are likely related to workweek activities, such as commuting, public services, or business-related issues. The lower activity on weekends might reflect reduced reporting due to fewer operational hours of city departments or residents being less engaged with city services during days off. The gradual decline in requests after the morning hours suggests that residents are less likely to report issues as the day progresses, possibly due to being occupied with work or other activities.</p>
 <p>Understanding when residents engage with the 311 system provides valuable insight into the timing of service needs. However, to gain a deeper understanding of the issues themselves, we can analyze the reasons behind these requests.</p>
 </section>
-<section id="exploration-of-request-reasons-bar" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="exploration-of-request-reasons-bar"><span class="header-section-number">3.3</span> Exploration of request reasons (bar)</h2>
+<section id="what-are-boston-residents-reporting" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="what-are-boston-residents-reporting"><span class="header-section-number">3.3</span> What Are Boston Residents Reporting?</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -344,23 +344,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>top_5_reasons <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(reason, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">order_by =</span> n) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>top_5_reasons <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(reason, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">order_by =</span> n) <span class="sc">|&gt;</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(reason)</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df_top5 <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>df_top5 <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(reason <span class="sc">%in%</span> top_5_reasons)</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>top_10_types <span class="ot">&lt;-</span> df_top5 <span class="sc">%&gt;%</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">order_by =</span> n) <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>top_10_types <span class="ot">&lt;-</span> df_top5 <span class="sc">|&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(type, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">order_by =</span> n) <span class="sc">|&gt;</span></span>
 <span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(type)</span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>df_aggregated <span class="ot">&lt;-</span> df_top5 <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>df_aggregated <span class="ot">&lt;-</span> df_top5 <span class="sc">|&gt;</span></span>
 <span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">ifelse</span>(type <span class="sc">%in%</span> top_10_types, type, <span class="st">"Other"</span>))</span>
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>reason_type_counts <span class="ot">&lt;-</span> df_aggregated <span class="sc">%&gt;%</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>reason_type_counts <span class="ot">&lt;-</span> df_aggregated <span class="sc">|&gt;</span></span>
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(reason, type)</span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Then plot as before</span></span>
@@ -409,12 +409,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"Park Maintenance &amp; Safety"</span>)</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># only the selected reasons</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>df_filtered <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(reason <span class="sc">%in%</span> selected_reasons)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>df_monthly <span class="ot">&lt;-</span> df_filtered <span class="sc">%&gt;%</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">floor_date</span>(open_dt, <span class="st">"month"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(reason, month) <span class="sc">%&gt;%</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>df_monthly <span class="ot">&lt;-</span> df_filtered <span class="sc">|&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">floor_date</span>(open_dt, <span class="st">"month"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(reason, month) <span class="sc">|&gt;</span></span>
 <span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">request_count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
 <span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>df_monthly<span class="sc">$</span>month <span class="ot">=</span> <span class="fu">as.Date</span>(df_monthly<span class="sc">$</span>month, <span class="at">format =</span> <span class="st">"%Y-%m-%d"</span>) </span>
@@ -458,12 +458,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Highway Maintenance requests, on the other hand, peak in the spring. This trend is likely a result of post-winter recovery efforts, where roads suffer damage from ice, snow removal activities, and the freeze-thaw cycles common in colder climates. These conditions lead to the formation of potholes, cracks, and other roadway imperfections that require timely repairs to ensure safe and efficient transportation.</p>
 <p>In contrast, the Graffiti and Signs &amp; Signals categories maintain relatively stable request volumes throughout the year. Switching gears a bit, let’s explore how long each request takes to be resolved.</p>
 </section>
-<section id="resolution-times" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="resolution-times"><span class="header-section-number">3.4</span> Resolution times</h2>
+<section id="how-long-does-it-take-to-resolve-issues" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="how-long-does-it-take-to-resolve-issues"><span class="header-section-number">3.4</span> How Long Does It Take to Resolve Issues?</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duration_hours =</span> <span class="fu">as.numeric</span>(<span class="fu">difftime</span>(closed_dt, open_dt, <span class="at">units =</span> <span class="st">"hours"</span>)),</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">log_duration =</span> <span class="fu">log1p</span>(duration_hours)) </span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -495,30 +495,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duration_category =</span> <span class="fu">case_when</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    duration_hours <span class="sc">&lt;</span> <span class="dv">2</span> <span class="sc">~</span> <span class="st">"&lt; 2 Hours"</span>,</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    duration_hours <span class="sc">&gt;=</span> <span class="dv">2</span> <span class="sc">&amp;</span> duration_hours <span class="sc">&lt;=</span> <span class="dv">24</span> <span class="sc">~</span> <span class="st">"2-24 Hours"</span>,</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    duration_hours <span class="sc">&gt;</span> <span class="dv">24</span> <span class="sc">~</span> <span class="st">"&gt; 24 Hours"</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">%&gt;%</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">|&gt;</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">duration_category =</span> <span class="fu">factor</span>(duration_category, </span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt; 2 Hours"</span>, <span class="st">"2-24 Hours"</span>, <span class="st">"&gt; 24 Hours"</span>)))</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Identify the top 5 reasons within each duration category</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>top_reasons <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(duration_category, reason) <span class="sc">%&gt;%</span>      <span class="co"># Group by both category and reason</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">%&gt;%</span> <span class="co"># Count occurrences</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(duration_category, <span class="fu">desc</span>(count)) <span class="sc">%&gt;%</span>  <span class="co"># Arrange for descending counts</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(duration_category) <span class="sc">%&gt;%</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> count, <span class="at">n =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span>       <span class="co"># Select top 5 per category</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>top_reasons <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(duration_category, reason) <span class="sc">|&gt;</span>      <span class="co"># Group by both category and reason</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">'drop'</span>) <span class="sc">|&gt;</span> <span class="co"># Count occurrences</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(duration_category, <span class="fu">desc</span>(count)) <span class="sc">|&gt;</span>  <span class="co"># Arrange for descending counts</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(duration_category) <span class="sc">|&gt;</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> count, <span class="at">n =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span>       <span class="co"># Select top 5 per category</span></span>
 <span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
 <span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Optional: Ensure that 'reason' is a factor with levels ordered by count within each category</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>top_reasons <span class="ot">&lt;-</span> top_reasons <span class="sc">%&gt;%</span></span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(duration_category) <span class="sc">%&gt;%</span></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reason =</span> <span class="fu">fct_reorder</span>(reason, count)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>top_reasons <span class="ot">&lt;-</span> top_reasons <span class="sc">|&gt;</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(duration_category) <span class="sc">|&gt;</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">reason =</span> <span class="fu">fct_reorder</span>(reason, count)) <span class="sc">|&gt;</span></span>
 <span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
 <span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Create the faceted bar chart</span></span>
@@ -552,16 +552,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In the over 24 hours category, Enforcement &amp; Abandoned Vehicles remains the most prevalent reason, underscoring that some enforcement actions are more complex and time-consuming, possibly involving legal processes or logistical challenges.</p>
 <p>Let’s switch gears a bit, and explore where, on a map, these requests are actually made to.</p>
 </section>
-<section id="neighborhoods" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="neighborhoods"><span class="header-section-number">3.5</span> Neighborhoods</h2>
+<section id="where-are-requests-coming-from" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="where-are-requests-coming-from"><span class="header-section-number">3.5</span> Where Are Requests Coming From?</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>requests_by_nh <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(neighborhood) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>requests_by_nh <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(neighborhood) <span class="sc">|&gt;</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">request_count =</span> <span class="fu">n</span>())</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>requests_by_nh <span class="ot">&lt;-</span> requests_by_nh <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>requests_by_nh <span class="ot">&lt;-</span> requests_by_nh <span class="sc">|&gt;</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">neighborhood =</span> <span class="fu">case_when</span>(</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    neighborhood <span class="sc">==</span> <span class="st">"Allston / Brighton"</span> <span class="sc">~</span> <span class="st">"Brighton"</span>,</span>
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    neighborhood <span class="sc">==</span> <span class="st">"Fenway / Kenmore / Audubon Circle / Longwood"</span> <span class="sc">~</span> <span class="st">"Fenway"</span>,</span>
@@ -573,9 +573,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Make all geometries valid</span></span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>boston_geo <span class="ot">&lt;-</span> <span class="fu">st_make_valid</span>(boston_geo)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>boston_geo <span class="ot">&lt;-</span> boston_geo <span class="sc">%&gt;%</span> <span class="fu">rename</span>(<span class="at">neighborhood =</span> Name)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>boston_geo <span class="ot">&lt;-</span> boston_geo <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">neighborhood =</span> Name)</span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>boston_geo_joined <span class="ot">&lt;-</span> boston_geo <span class="sc">%&gt;%</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>boston_geo_joined <span class="ot">&lt;-</span> boston_geo <span class="sc">|&gt;</span></span>
 <span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(requests_by_nh, <span class="at">by =</span> <span class="st">"neighborhood"</span>)</span>
 <span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
