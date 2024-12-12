@@ -8,6 +8,7 @@ For this project, we are using the latest Boston 311 Service Requests dataset of
 
 
 ```{r}
+#| warning: false
 # load packages and read in data
 
 library(readr)
@@ -58,6 +59,7 @@ All of the other columns either have 0 null values, or a very small percentage (
 
 
 ```{r}
+#| warning: false
 # https://cran.r-project.org/web/packages/naniar/vignettes/naniar-visualisation.html
 # install.packages("naniar")
 library(naniar)

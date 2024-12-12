@@ -1,33 +1,38 @@
 # Results
 
 ```{r}
-# Load packages and data
-
+#| message: false
+#| warning: false
+#| 
 library(readr)
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 library(ggplot2)
-library(tidyverse)
+library(tidyverse,warn.conflicts = FALSE)
 library(lubridate)
 library(ggalluvial)
+library(ggrepel)
+library(sf)
 df <- read_csv('/Users/andyyang/desktop/EDAV/boston311.csv')
-dim(df) #274415 rows x 30 cols
-str(df) # see dtypes
-head(df)
+# dim(df) #274415 rows x 30 cols
+# str(df) # see dtypes
+# head(df)
 ```
-
+## Data Cleaning
 ```{r}
-# Cleaning
-
-# From our missing value analysis, since submitted_photo and closedphoto column do not contain many non-null values, let’s drop them
-df <- df |> select(-submitted_photo, -closed_photo)
+df <- df |> select(-submitted_photo, -closed_photo, -closure_reason, -location_zipcode, -sla_target_dt)
 ```
+From our missing value analysis, since submitted_photo and closedphoto column do not contain many non-null values, we drop these columns entirely.
 
+A few other other columns (closure_reason, location_zipcode, sla_target_dt) have around 20% null values, we choose to drop these too as they will not interfere with our analysis.
+
+What remains are columns with a very low percentage of missing values (~1%), and a comprehensive dataset.
 
 ## Number of requests by season, months, days of the week, and hours of the day (line, heatmap)
 
 We begin our analysis by investigating any seasonal trends in the number of 311 requests made.
 
 ```{r graph3:}
+#| warning: false
 df$open_d <- as.Date(df$open_dt, format = "%Y-%m-%d") 
 
 
@@ -38,7 +43,7 @@ df_monthly <- df |>
 
 ggplot(df_monthly, aes(x = month, y = request_count)) +
   geom_line(color = "blue") +
-  geom_point(color = "blue", size = 2) +           # Added points
+  geom_point(color = "blue", size = 2) +  # Added points
   scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") +
   labs(
     title = "Number of Requests by Month",
@@ -56,13 +61,14 @@ Since this dataset was pulled in November, we will assume the data for that mont
 While exploring seasonal trends provide us with insights into how external factors like weather and activities influence the volume of requests, we can also analyze patterns by day of the week and hour of the day to get a closer look at when residents are most likely to engage with the 311 system. These finer temporal trends can help us understand the daily rhythms of service requests and how they align with the city's operational dynamics.
 
 ```{r}
+#| warning: false
+
 df$day_of_week <- wday(df$open_dt, label = TRUE, week_start = 1) # Monday = 1
 df$hour <- hour(df$open_dt)
 
 df$day_of_week <- factor(df$day_of_week, levels = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"))
 df$day_of_week <- fct_rev(df$day_of_week)
 
-# Then proceed with your plotting code
 heat_data <- df %>%
   count(day_of_week, hour)
 
@@ -81,6 +87,8 @@ Understanding when residents engage with the 311 system provides valuable insigh
 ## Exploration of request reasons (bar)
 
 ```{r graph2: top reasons barplot}
+#| warning: false
+
 df |>
   group_by(reason) |>
   summarize(n = n()) |>
@@ -104,13 +112,14 @@ This naturally leads to the question: what do these reasons actually represent? 
 
 This allows us to create the following alluvial diagram, showing how a "reason" flows to different "types".
 ```{r}
+#| warning: false
+
 
 top_5_reasons <- df %>%
   count(reason, sort = TRUE) %>%
   slice_max(n = 5, order_by = n) %>%
   pull(reason)
 
-# Filter the dataset to only include these top 5 reasons
 df_top5 <- df %>%
   filter(reason %in% top_5_reasons)
 
@@ -158,6 +167,8 @@ The main thing to notice is that the vast majority of "Enforcement & Abandoned V
 Now that we have an idea of both the temporal trends of requests and the request reasons, let's see the temporal trends of request reasons!
 
 ```{r}
+#| warning: false
+
 selected_reasons <- c(
                       # "Enforcement & Abandoned Vehicles",
                       "Signs & Signals",
@@ -167,7 +178,7 @@ selected_reasons <- c(
                       "Graffiti",
                       "Park Maintenance & Safety")
 
-# Filter the data to only the selected reasons
+# only the selected reasons
 df_filtered <- df %>%
   filter(reason %in% selected_reasons)
 
@@ -178,7 +189,7 @@ df_monthly <- df_filtered %>%
 
 df_monthly$month = as.Date(df_monthly$month, format = "%Y-%m-%d") 
 
-# Plot the line chart
+# LINE CHART
 ggplot(df_monthly, aes(x = month, y = request_count, color = reason)) +
   geom_line(size = 1) +
   scale_x_date(date_breaks = "1 month", date_labels = "%b %Y") +
@@ -197,10 +208,10 @@ ggplot(df_monthly, aes(x = month, y = request_count, color = reason)) +
 )+
 guides(
     color = guide_legend(
-      nrow = 2,                   # Force legend into 2 rows
-      byrow = TRUE,               # Fill the legend by row
-      # title.position = "top",     # Position of the title (if any)
-      title.hjust = 0.5           # Center the title horizontally
+      nrow = 2,                   # Force legend into 2 rs
+      byrow = TRUE,
+      # title.position = "top",   
+      title.hjust = 0.5
     )
   )
 
@@ -218,6 +229,8 @@ In contrast, the Graffiti and Signs & Signals categories maintain relatively sta
 ## Resolution times
 
 ```{r}
+#| warning: false
+
 
 df <- df %>%
   mutate(duration_hours = as.numeric(difftime(closed_dt, open_dt, units = "hours")),
@@ -245,6 +258,8 @@ The transformed distribution exhibits a tri-modal pattern, with distinct peaks a
 
 
 ```{r fig.width=10, fig.height=9}
+#| warning: false
+
 df <- df %>%
   mutate(duration_category = case_when(
     duration_hours < 2 ~ "< 2 Hours",
@@ -272,7 +287,7 @@ top_reasons <- top_reasons %>%
   ungroup()
 
 # 3. Create the faceted bar chart
-ggplot(top_reasons, aes(x = reason, y = count, fill = reason)) +
+ggplot(top_reasons, aes(x = fct_reorder(reason, count), y = count, fill = reason)) +
   geom_bar(stat = "identity", show.legend = FALSE) +          # Create bars without legend
   facet_wrap(~ duration_category, scales = "free_y", ncol=1) +        # Facet by duration category with free y-scales
   coord_flip() +                                              # Flip coordinates for better readability
@@ -289,18 +304,89 @@ ggplot(top_reasons, aes(x = reason, y = count, fill = reason)) +
   )
 
 ```
-After dividing our durations into three categories (<2 hrs, 2-24 hrs, >24 hrs) and plotting the 5 most frequent reasons
+After categorizing 311 service request durations into three groups—less than 2 hours, 2 to 24 hours, and over 24 hours—and identifying the top five reasons in each category, clear patterns emerge regarding resolution times.
 
-Purpose: Investigate if neighborhoods with more requests have longer resolution times
+In the less than 2 hours category, Street Cleaning, Code Enforcement, and Enforcement & Abandoned Vehicles are the most frequent requests, demonstrating the city's efficiency in addressing these urgent and high-volume issues promptly.
+
+The 2 to 24 hours category continues to feature Street Cleaning, Code Enforcement, and Enforcement & Abandoned Vehicles, albeit with slightly lower counts. Additionally, Sanitation and Highway Maintenance appear in this category, indicating that infrastructure-related requests require more coordination across different sectors and resources, leading to longer resolution times.
+
+In the over 24 hours category, Enforcement & Abandoned Vehicles remains the most prevalent reason, underscoring that some enforcement actions are more complex and time-consuming, possibly involving legal processes or logistical challenges.
+
+Let's switch gears a bit, and explore where, on a map, these requests are actually made to.
+
+## Neighborhoods
+
 ```{r}
+#| warning: false
+
+requests_by_nh <- df %>%
+  group_by(neighborhood) %>%
+  summarize(request_count = n())
+
+requests_by_nh <- requests_by_nh %>%
+  mutate(neighborhood = case_when(
+    neighborhood == "Allston / Brighton" ~ "Brighton",
+    neighborhood == "Fenway / Kenmore / Audubon Circle / Longwood" ~ "Fenway",
+    neighborhood == "South Boston / South Boston Waterfront" ~ "South Boston",
+    TRUE ~ neighborhood  # Keep other values unchanged
+  ))
+
+boston_geo <- st_read("~/Desktop/EDAV/Boston_Neighborhoods.geojson", quiet = TRUE)
+
+# Make all geometries valid
+boston_geo <- st_make_valid(boston_geo)
+boston_geo <- boston_geo %>% rename(neighborhood = Name)
+
+boston_geo_joined <- boston_geo %>%
+  left_join(requests_by_nh, by = "neighborhood")
 
 
+# Centroid points from the sf object
+centroids <- st_centroid(boston_geo_joined)
+
+# Extract coordinates
+centroids_coords <- st_coordinates(centroids)
+centroids_df <- cbind(boston_geo_joined, centroids_coords)
+
+# centroids_df now contains all original data plus X and Y columns for the centroid coordinates
+ggplot() +
+  geom_sf(data = boston_geo_joined, aes(fill = request_count),
+          color = "white", size = 0.2) +
+  # Use geom_text_repel with coordinates extracted from centroids
+  geom_text_repel(data = centroids_df, 
+                  aes(x = X, y = Y, label = neighborhood),
+                  size = 3, color = "black", 
+                  box.padding = 0.3, 
+                  point.padding = 0.3) +
+  scale_fill_viridis_c(option = "plasma", na.value = "gray90") +
+  theme_minimal() +
+  labs(title = "311 Requests by Neighborhood in Boston",
+       fill = "Number of Requests")
+
+
+```
+Dorchester clearly stands out with the highest volume of 311 requests, surpassing 36,000 and significantly outpacing all other neighborhoods. Roxbury, South Boston, and Jamaica Plain follow with substantial request counts, each registering over 20,000. Meanwhile, more central neighborhoods such as the South End, East Boston, and Jamaica Plain also record considerable activity, reflecting ongoing demands for city services and infrastructure support. Although areas like Back Bay and Downtown/Financial District report fewer requests relative to the top performers, their numbers still exceed 10,000, indicating that no part of the city is without frequent resident needs.
+
+This raises an important question: does the volume of requests in a neighborhood correlate with how quickly they are resolved? Exploring the relationship between neighborhood request density and resolution times can provide valuable insights into the city's resource allocation and service efficiency.
+
+
+```{r}
+#| warning: false
 df |> 
   group_by(neighborhood) |> 
-  summarize(avg_duration = mean(duration_hours, na.rm = TRUE), request_count = n()) |> 
+  summarize(
+    avg_duration = mean(duration_hours, na.rm = TRUE), 
+    request_count = n()
+  ) |> 
   ggplot(aes(x = request_count, y = avg_duration, label = neighborhood)) +
   geom_point(color = "blue", size = 3) +
-  geom_text(vjust = 1.5, hjust = 0.5, size = 3) +
+  geom_text_repel(
+    size = 3, 
+    box.padding = 0.35,     # Space around the text label
+    point.padding = 0.5,    # Space between the point and the label
+    segment.color = 'grey50', # Color of the line connecting label to point
+    max.overlaps = Inf       # Allow all labels to be displayed without removing any
+  ) +
   labs(
     title = "Request Volume vs. Resolution Time by Neighborhood",
     x = "Number of Requests",
@@ -308,17 +394,23 @@ df |>
   ) +
   theme_minimal()
 
-
-
-
 ```
+Overall, the data indicates that the average resolution time remains relatively consistent irrespective of the number of requests a neighborhood receives. Most neighborhoods exhibit average resolution times within the 100 to 200-hour range, suggesting a standardized efficiency in handling service requests city-wide.
+
+However, the graph identifies some outliers that deviate from this general trend. Notably, West Roxbury and Roslindale, neighboring areas located in the southwestern corner of Boston, exhibit higher-than-average resolution times. This clustering of high-resolution times in adjacent areas may be attributed to several factors, such as limited access to city resources, higher volumes of complex requests, or logistical challenges inherent to their geographic locations.
+
+Conversely, Dorchester stands out by receiving the highest number of requests while maintaining an average resolution time within the expected range. This balance between high request volume and consistent resolution times highlights effective resource management and operational efficiency within the neighborhood. Dorchester’s ability to handle a large influx of requests without compromising on resolution speed reflects positively on the city's capacity to support densely populated or highly active areas without overburdening service departments
+
+Lastly, neighborhoods such as the South End and South Boston/South Boston Waterfront, located adjacent to the popular Seaport District, as well as Back Bay, located near bustling shopping areas, demonstrate remarkably low average resolution times. These neighborhoods are located in the heart of Boston and are surrounded by dense urban environments, bustling streets, and commercial establishments that may be better equipped to handle service demands efficiently. For example, the central location probably facilitates quicker access to city services and resources, while the concentration of businesses and amenities may streamline the process of addressing and resolving requests.
 
 
-```{r}
-# List of neighborhoods to include
-selected_neighborhoods <- c("Allston / Brighton", "Roxbury", "Back Bay", "South Boston / South Boston Waterfront", "Downtown / Financial District", "Fenway / Kenmore / Audubon Circle / Longwood", "Hyde Park")
 
-# Filter data for selected neighborhoods
+```{r fig.width=10, fig.height=9}
+#| warning: false
+
+selected_neighborhoods <- c("Roslindale", "West Roxbury", "Back Bay", "South Boston / South Boston Waterfront", "South End", "Dorchester")
+
+
 df_filtered <- df |> 
   filter(neighborhood %in% selected_neighborhoods) |> 
   group_by(neighborhood) |> 
@@ -326,7 +418,7 @@ df_filtered <- df |>
   slice_max(order_by = count, n = 3, with_ties = FALSE) |> 
   ungroup()
 
-# Create the grouped bar chart
+
 ggplot(df_filtered, aes(x = fct_reorder(neighborhood, count, .desc = TRUE), y = count, fill = reason)) +
   geom_bar(stat = "identity", position = position_dodge(width = 0.9), width = 0.9) +  # Grouped bar settings
   labs(
@@ -346,173 +438,16 @@ ggplot(df_filtered, aes(x = fct_reorder(neighborhood, count, .desc = TRUE), y = 
 
 ```
 
+Breaking down the six neighborhoods from the previous graph by reasons highlights both similarities and differences in 311 request patterns.
 
-```{r}
-df |> 
-  count(fire_district, police_district) |> 
-  ggplot(aes(x = fire_district, y = n, fill = police_district)) +
-  geom_bar(stat = "identity") +
-  labs(title = "Requests by Fire and Police District", x = "Fire District", y = "Count", fill = "Police District") +
-  theme_minimal()
+South Boston / South Boston Waterfront stands out with an overwhelming number of requests for Enforcement & Abandoned Vehicles, likely driven by the notorious parking challenges in the Seaport area, where residents and visitors frequently report parking violations.
 
-```
+In contrast, bustling downtown neighborhoods like the South End, Seaport, and Back Bay share the same top three reasons for 311 requests: Code Enforcement, Enforcement & Abandoned Vehicles, and Street Cleaning. These categories reflect the unique demands of urban areas with dense populations and high activity levels.
 
-
-```{r}
-ontime_by_reason <- df %>%
-  count(reason, on_time) %>%
-  group_by(reason) %>%
-  mutate(prop = n / sum(n))
-
-ggplot(ontime_by_reason, aes(x = reorder(reason, -prop), y = prop, fill = on_time)) +
-  geom_col(position = "fill") +
-  coord_flip() +
-  labs(title = "On-Time Performance by Reason", x = "Reason", y = "Proportion") +
-  theme(legend.position = "bottom")
-
-
-```
+Meanwhile, less urban neighborhoods such as Roslindale, West Roxbury, and Dorchester show a different pattern. While Enforcement & Abandoned Vehicles remains a top concern, other requests like Sanitation and Tree Maintenance also feature prominently, reflecting the more residential and suburban characteristics of these areas.
 
 
 
-
-
-
-
-<!-- ```{r} -->
-<!-- df |>  -->
-<!--   group_by(neighborhood, reason) |> -->
-<!--   summarize(ct = n()) |> -->
-<!--   group_by(neighborhood) |>  -->
-<!--   slice_max(order_by = ct, n = 3, with_ties = FALSE) |>  -->
-<!--   ungroup()|> -->
-<!--   ggplot(aes(x = neighborhood, y = ct, fill = reason)) + -->
-<!--   geom_bar(stat = "identity", position = "dodge") + -->
-<!--   labs( -->
-<!--     title = "Top 3 Reasons for 311 Requests by Neighborhood", -->
-<!--     x = "Neighborhood", -->
-<!--     y = "Count", -->
-<!--     fill = "Reason" -->
-<!--   ) + -->
-<!--   theme_minimal() + -->
-<!--   theme( -->
-<!--     axis.text.x = element_text(angle = 45, hjust = 1) -->
-<!--   ) -->
-
-
-<!-- ``` -->
-
-
-
-
-
-
-
-
-
-<!-- <!-- ```{r michellle boxplot} --> -->
-<!-- <!-- df <- df |>  --> -->
-<!-- <!--   mutate( --> -->
-<!-- <!--     open_dt = as.POSIXct(open_dt), --> -->
-<!-- <!--     closed_dt = as.POSIXct(closed_dt), --> -->
-<!-- <!--     duration_hours = as.numeric(difftime(closed_dt, open_dt, units = "hours")), --> -->
-<!-- <!--     log_duration = ifelse(duration_hours >= 0, log1p(duration_hours), NA), --> -->
-<!-- <!--     reason = fct_reorder(reason, duration_hours, .fun = median, .desc = TRUE) --> -->
-<!-- <!--   ) --> -->
-
-<!-- <!-- ggplot(df, aes(x = duration_hours, y = fct_reorder(subject, duration_hours, .fun = median, .desc = TRUE))) + --> -->
-<!-- <!--   geom_boxplot(outlier.alpha = 0.25) + --> -->
-<!-- <!--   labs( --> -->
-<!-- <!--     title = "Distribution of Duration by Reason", --> -->
-<!-- <!--     x = "Duration (Hours)", --> -->
-<!-- <!--     y = "Reason" --> -->
-<!-- <!--   ) + --> -->
-<!-- <!--   theme_minimal() --> -->
-
-
-
-<!-- <!-- ``` --> -->
-
-
-<!-- <!-- ## Geographic distribution of requests (choropleth, bar?) --> -->
-
-<!-- <!-- ##  Exploration of requests by department (highest volume of requests, and how do their average resolution times compare) --> -->
-
-
-
-
-
-
-
-
-
-
-
-<!-- <!-- ```{r} --> -->
-
-<!-- <!-- df$day_of_week <- wday(df$open_dt, label = TRUE) --> -->
-<!-- <!-- df$hour <- hour(df$open_dt) --> -->
-
-<!-- <!-- # Bar plot for day of week --> -->
-<!-- <!-- ggplot(df, aes(x = day_of_week)) + --> -->
-<!-- <!--   geom_bar(fill = "steelblue") + --> -->
-<!-- <!--   labs(title = "Number of Requests by Day of Week", x = "Day of Week", y = "Count") --> -->
-
-<!-- <!-- # Bar plot for hour of day --> -->
-<!-- <!-- ggplot(df, aes(x = hour)) + --> -->
-<!-- <!--   geom_bar(fill = "steelblue") + --> -->
-<!-- <!--   labs(title = "Number of Requests by Hour of Day", x = "Hour", y = "Count") --> -->
-
-
-<!-- <!-- ``` --> -->
-
-<!-- <!-- ```{r} --> -->
-<!-- <!-- reason_subject_count <- df %>% --> -->
-<!-- <!--   count(subject, reason) --> -->
-
-<!-- <!-- ggplot(reason_subject_count, aes(x = subject, y = n, fill = reason)) + --> -->
-<!-- <!--   geom_col() + --> -->
-<!-- <!--   coord_flip() + --> -->
-<!-- <!--   labs(title = "Reasons by Subject", x = "Subject", y = "Count") + --> -->
-<!-- <!--   theme(legend.position = "bottom") --> -->
-
-
-<!-- <!-- ``` --> -->
-
-
-
-
-<!-- <!-- ```{r} --> -->
-<!-- <!-- library(ggmap) --> -->
-<!-- <!-- # Get a map of Boston (requires a Google API key or try an open source map) --> -->
-<!-- <!-- # boston_map <- get_map(location = "Boston, MA", zoom = 12) --> -->
-
-<!-- <!-- # Using a base map (if available): --> -->
-<!-- <!-- # ggmap(boston_map) + --> -->
-<!-- <!-- #   geom_point(data = df, aes(x = longitude, y = latitude), alpha = 0.5, color = "red") --> -->
-
-<!-- <!-- # If no background map, just a basic scatter: --> -->
-<!-- <!-- ggplot(df, aes(x = longitude, y = latitude)) + --> -->
-<!-- <!--   geom_point(alpha = 0.1, color = "red") + --> -->
-<!-- <!--   labs(title = "Spatial Distribution of Requests", x = "Longitude", y = "Latitude") + --> -->
-<!-- <!--   coord_quickmap() --> -->
-
-<!-- <!-- ``` --> -->
-
-<!-- <!-- ```{r} --> -->
-ontime_by_reason <- df %>%
-  count(reason, on_time) %>%
-  group_by(reason) %>%
-  mutate(prop = n / sum(n))
-
-ggplot(ontime_by_reason, aes(x = reorder(reason, -prop), y = prop, fill = on_time)) +
-  geom_col(position = "fill") +
-  coord_flip() +
-  labs(title = "On-Time Performance by Reason", x = "Reason", y = "Proportion") +
-  theme(legend.position = "bottom")
-
-
-<!-- <!-- ``` --> -->
 
 
 
