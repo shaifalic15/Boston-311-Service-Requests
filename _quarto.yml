@@ -8,8 +8,13 @@ execute:
 book:
   title: "Boston 311 Service Requests"
   author:
+<<<<<<< HEAD
     - Shaifali Choudhary ()(sc5609)
     - Andy Jiaming Yang (ajy2126)
+=======
+    - Shaifali Choudhary  (sc5609)
+    - Andy Jiaming Yang (ajy2126) 
+>>>>>>> main
   repo-url: https://github.com/shaifalic15/Boston-311-Service-Requests
   date: today
   page-footer:

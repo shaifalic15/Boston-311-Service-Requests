@@ -1,1 +1,20 @@
 # Conclusion
+
+## Key Takeaways
+
+1. The volume of requests throughout 2024 rose steadily, peaking in August—likely influenced by warmer weather and increased outdoor activity.
+2. The most frequent request category was “Enforcement & Abandoned Vehicles,” largely driven by parking-related issues such as illegally parked cars.
+3. While many issues (e.g., street cleaning, trash collection) are typically resolved within 24 hours, certain requests—such as highway maintenance and abandoned vehicle removal—tend to require more time.
+4. Dorchester, situated just south of Downtown, generated the highest volume of service requests.
+5. Neighborhoods like West Roxbury and Roslindale recorded relatively long average resolution times, in contrast to the South End and South Boston Waterfront, which saw quicker resolutions—possibly reflecting differences in urban density and city-responsiveness.
+
+## Limitations
+
+The dataset is incomplete for November and December 2024, potentially skewing trends toward earlier months. Additionally, the dataset did not come with its own .shp file, which is why the choropleth has some unfilled spaces.
+
+## Future Directions and Lessons Learned
+Through this project, we gained valuable experience in using d3 and a variety of visualization techniques to explore and communicate data-driven insights. While our analysis focused on identifying patterns in the frequency and resolution of requests, there is significant potential to expand into more specific questions and areas of interest.
+
+For example, exploring the "closure_reason" and "case_title" columns with text analytics could provide deeper insights into the nature and outcomes of requests. Or, using the "location_street_name" column could reveal micro-trends and localized issues, informing targeted interventions.
+
+Insights from this analysis could be highly actionable for city officials and policymakers, enabling them to address key issues more effectively and improve overall city responsiveness. In conclusion, integrating additional layers of analysis and exploring new dimensions within the dataset, future work can provide a more comprehensive understanding of the city's 311 system and its role in urban management.
