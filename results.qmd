@@ -12,7 +12,7 @@ library(lubridate)
 library(ggalluvial)
 library(ggrepel)
 library(sf)
-df <- read_csv('/Users/andyyang/desktop/EDAV/boston311.csv')
+df <- read_csv('/Users/shaifalichoudhary/Downloads/boston311.csv')
 # dim(df) #274415 rows x 30 cols
 # str(df) # see dtypes
 # head(df)
@@ -337,7 +337,7 @@ requests_by_nh <- requests_by_nh |>
     TRUE ~ neighborhood  # Keep other values unchanged
   ))
 
-boston_geo <- st_read("~/Desktop/EDAV/Boston_Neighborhoods.geojson", quiet = TRUE)
+boston_geo <- st_read("/Users/shaifalichoudhary/Downloads/Boston_Neighborhoods.geojson", quiet = TRUE)
 
 # Make all geometries valid
 boston_geo <- st_make_valid(boston_geo)
