@@ -4,39 +4,59 @@
     "href": "index.html",
     "title": "Boston 311 Service Requests",
     "section": "",
-    "text": "1 Introduction\nTopic: Boston 311 Service Requests\nWe chose the Boston 311 Service Requests topic because it offers a unique window into how a city addresses everyday challenges faced by its residents. From potholes to noise complaints, this data captures the pulse of Boston’s public services and the issues that matter most to its communities. By analyzing Boston 311 Service Requests dataset, we aim to uncover patterns in the types of service requests, their geographical distribution, and how efficiently they are resolved. For readers unfamiliar with 311 systems, they serve as a vital link between residents and city departments, enabling people to report non-emergency issues and request services. Exploring this data not only highlights the responsiveness of urban governance but also sheds light on potential areas for improvement in delivering public services effectively.",
+    "text": "1 Introduction\nTopic: Boston 311 Service Requests\nWe chose the Boston 311 Service Requests topic because it offers a unique window into how a city addresses everyday challenges faced by its residents. From potholes to noise complaints, this data captures the pulse of Boston’s public services and the issues that matter most to its communities. By analyzing Boston 311 Service Requests dataset, we aim to uncover patterns in the types of service requests, their geographical distribution, and how efficiently they are resolved. For readers unfamiliar with 311 systems, they serve as a vital link between residents and city departments, enabling people to report non-emergency issues and request services. Exploring this data not only highlights the responsiveness of urban governance but also sheds light on potential areas for improvement in delivering public services effectively. This dataset has a lot to explore, so to keep a wide scope, we will try to explore around these questions: 1. When Do Residents Report Issues? 2. What Are the Reasons behind the Reports? 3. How Long Does It Take to Resolve Issues? 4. What Neighborhoods Are Requests Coming From?",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
-    "objectID": "data.html",
-    "href": "data.html",
-    "title": "2  Data",
-    "section": "",
-    "text": "2.1 Description\nFor this project, we are using the latest Boston 311 Service Requests dataset of year 2024, which is publicly available on the Boston.gov open data portal. This dataset is maintained by the City of Boston and contains detailed records of non-emergency service requests submitted by residents through the city’s 311 system. The data includes fields such as request types, submission dates, locations, statuses, and resolution times, offering a comprehensive view of the city’s service management. The dataset is updated regularly, ensuring it reflects current trends, although the exact frequency of updates is not explicitly specified It is provided in a tabular format, accessible as a CSV file, and includes both categorical and geographic data, such as latitude, longitude, and neighborhood identifiers. One potential challenge is the presence of missing or inconsistent data, particularly in fields like “closure reason” or “submitted photo,” which will require preprocessing. I plan to import the dataset into RStudio using the read.csv function for cleaning and analysis. The dataset can be accessed from its original source at Boston 311 Service Requests with the year 2024.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
-    "objectID": "data.html#missing-value-analysis",
-    "href": "data.html#missing-value-analysis",
-    "title": "2  Data",
-    "section": "2.2 Missing value analysis",
-    "text": "2.2 Missing value analysis",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
-    ]
-  },
-  {
     "objectID": "d3graph.html",
     "href": "d3graph.html",
-    "title": "4  Interactive graph",
+    "title": "2  Interactive graph",
     "section": "",
     "text": "Please hover over any bar to view more details about the specific category and its characteristics.\n\nThe category with the highest number of requests is “Abandoned Vehicles”, receiving over 60,000 reports. These cases often take more than 24 hours to resolve. The area with the highest frequency of such requests is “South Boston”. The graph above provides insights into the predominant issues faced by Boston residents, including the typical resolution time for each issue, and highlights the areas that are experiencing the most frequent complaints. By analyzing this data, we can gain a better understanding of how efficiently city services are addressing these concerns, and identify any patterns or trends that could help improve response times and service delivery. This information is crucial for city planning and resource allocation, as it allows authorities to focus efforts on areas with the highest demand and ensure that the most pressing issues are addressed promptly.",
     "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactive graph</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Interactive graph</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html",
+    "href": "conclusion.html",
+    "title": "3  Conclusion",
+    "section": "",
+    "text": "3.1 Key Takeaways",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#key-takeaways",
+    "href": "conclusion.html#key-takeaways",
+    "title": "3  Conclusion",
+    "section": "",
+    "text": "The volume of requests throughout 2024 rose steadily, peaking in August—likely influenced by warmer weather and increased outdoor activity.\nThe most frequent request category was “Enforcement & Abandoned Vehicles,” largely driven by parking-related issues such as illegally parked cars.\nWhile many issues (e.g., street cleaning, trash collection) are typically resolved within 24 hours, certain requests—such as highway maintenance and abandoned vehicle removal—tend to require more time.\nDorchester, situated just south of Downtown, generated the highest volume of service requests.\nNeighborhoods like West Roxbury and Roslindale recorded relatively long average resolution times, in contrast to the South End and South Boston Waterfront, which saw quicker resolutions—possibly reflecting differences in urban density and city-responsiveness.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#limitations",
+    "href": "conclusion.html#limitations",
+    "title": "3  Conclusion",
+    "section": "3.2 Limitations",
+    "text": "3.2 Limitations\nThe dataset is incomplete for November and December 2024, potentially skewing trends toward earlier months. Additionally, the dataset did not come with its own .shp file, which is why the choropleth has some unfilled spaces.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Conclusion</span>"
+    ]
+  },
+  {
+    "objectID": "conclusion.html#future-directions-and-lessons-learned",
+    "href": "conclusion.html#future-directions-and-lessons-learned",
+    "title": "3  Conclusion",
+    "section": "3.3 Future Directions and Lessons Learned",
+    "text": "3.3 Future Directions and Lessons Learned\nThrough this project, we gained valuable experience in using d3 and a variety of visualization techniques to explore and communicate data-driven insights. While our analysis focused on identifying patterns in the frequency and resolution of requests, there is significant potential to expand into more specific questions and areas of interest.\nFor example, exploring the “closure_reason” and “case_title” columns with text analytics could provide deeper insights into the nature and outcomes of requests. Or, using the “location_street_name” column could reveal micro-trends and localized issues, informing targeted interventions.\nInsights from this analysis could be highly actionable for city officials and policymakers, enabling them to address key issues more effectively and improve overall city responsiveness. In conclusion, integrating additional layers of analysis and exploring new dimensions within the dataset, future work can provide a more comprehensive understanding of the city’s 311 system and its role in urban management.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Conclusion</span>"
     ]
   }
 ]

@@ -69,18 +69,17 @@ const bars = svg.append("g")
     tooltip.style("left", (event.clientX + 10) + "px")
            .style("top", (event.clientY - 28) + "px");
 
-    // Apply blur effect to the hovered bar
-    d3.select(this)
-      .style("filter", "blur(2px)");  // Blur the hovered bar
+    // Apply blur effect to all bars except the hovered one
+    bars.style("filter", "blur(2px)");  // Apply blur to all bars
+    d3.select(this).style("filter", "none");  // Remove blur from the hovered bar
   })
   .on("mouseout", function() {
     tooltip.transition()
       .duration(200)
       .style("opacity", 0);
 
-    // Remove the blur effect
-    d3.select(this)
-      .style("filter", "none");  // Reset filter to remove blur
+    // Remove blur effect from all bars
+    bars.style("filter", "none");  // Reset all bars' filter
   });
 
 // Transition bars from 0 to their value
