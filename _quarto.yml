@@ -18,7 +18,8 @@ book:
   repo-actions: [edit, issue]
   chapters:
     - index.qmd
-    
+    - data.qmd
+    - results.qmd
     - d3graph.qmd
     - conclusion.qmd
 
