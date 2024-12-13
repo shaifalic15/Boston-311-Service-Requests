@@ -1,4 +1,3 @@
-// Sample dataset
 const dataset = [
   { caseTitle: "Abandoned Vehicle", areaHighest: "South Boston", resolutionTime: "> 24 hours", requests: 62031 },
   { caseTitle: "Street Cleaning", areaHighest: "Dorchester", resolutionTime: "< 2 hours", requests: 45670 },
