@@ -28,5 +28,15 @@
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Data</span>"
     ]
+  },
+  {
+    "objectID": "d3graph.html",
+    "href": "d3graph.html",
+    "title": "4  Interactive graph",
+    "section": "",
+    "text": "Please hover over any bar to view more details about the specific category and its characteristics.\n\nThe category with the highest number of requests is “Abandoned Vehicles”, receiving over 60,000 reports. These cases often take more than 24 hours to resolve. The area with the highest frequency of such requests is “South Boston”. The graph above provides insights into the predominant issues faced by Boston residents, including the typical resolution time for each issue, and highlights the areas that are experiencing the most frequent complaints. By analyzing this data, we can gain a better understanding of how efficiently city services are addressing these concerns, and identify any patterns or trends that could help improve response times and service delivery. This information is crucial for city planning and resource allocation, as it allows authorities to focus efforts on areas with the highest demand and ensure that the most pressing issues are addressed promptly.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactive graph</span>"
+    ]
   }
 ]
