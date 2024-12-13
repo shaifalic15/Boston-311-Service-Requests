@@ -15,7 +15,7 @@ library(readr)
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
-df <- read_csv('/Users/andyyang/desktop/EDAV/boston311.csv')
+df <- read_csv('/Users/shaifalichoudhary/Downloads/boston311.csv')
 
 # pivot and calculate the number of missing values per variable
 missing_percent <- df |>
