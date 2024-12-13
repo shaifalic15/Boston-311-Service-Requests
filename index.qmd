@@ -2,6 +2,7 @@
 Topic: Boston 311 Service Requests
 
 We chose the Boston 311 Service Requests topic because it offers a unique window into how a city addresses everyday challenges faced by its residents. From potholes to noise complaints, this data captures the pulse of Boston’s public services and the issues that matter most to its communities. By analyzing Boston 311 Service Requests dataset, we aim to uncover patterns in the types of service requests, their geographical distribution, and how efficiently they are resolved. For readers unfamiliar with 311 systems, they serve as a vital link between residents and city departments, enabling people to report non-emergency issues and request services. Exploring this data not only highlights the responsiveness of urban governance but also sheds light on potential areas for improvement in delivering public services effectively. This dataset has a lot to explore, so to keep a wide scope, we will try to explore around these questions:
+
 1. When Do Residents Report Issues?
 2. What Are the Reasons behind the Reports?
 3. How Long Does It Take to Resolve Issues?
