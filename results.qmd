@@ -289,6 +289,9 @@ top_reasons <- top_reasons |>
   mutate(reason = fct_reorder(reason, count)) |>
   ungroup()
 
+top_reasons <- top_reasons |>
+  filter(!is.na(duration_category))
+
 # 3. Create the faceted bar chart
 ggplot(top_reasons, aes(x = fct_reorder(reason, count), y = count, fill = reason)) +
   geom_bar(stat = "identity", show.legend = FALSE) +          # Create bars without legend
@@ -329,7 +332,6 @@ requests_by_nh <- df |>
 
 requests_by_nh <- requests_by_nh |>
   mutate(neighborhood = case_when(
-    neighborhood == "Allston / Brighton" ~ "Brighton",
     neighborhood == "Fenway / Kenmore / Audubon Circle / Longwood" ~ "Fenway",
     neighborhood == "South Boston / South Boston Waterfront" ~ "South Boston",
     TRUE ~ neighborhood  # Keep other values unchanged
@@ -369,6 +371,8 @@ ggplot() +
 
 
 ```
+Note: This geojson file of Boston is from a third party source (https://github.com/blackmad/neighborhoods/blob/master/boston.geojson), which is why some neighborhoods are not colored. 
+
 Dorchester clearly stands out with the highest volume of 311 requests, surpassing 36,000 and significantly outpacing all other neighborhoods. Roxbury, South Boston, and Jamaica Plain follow with substantial request counts, each registering over 20,000. Meanwhile, more central neighborhoods such as the South End, East Boston, and Jamaica Plain also record considerable activity, reflecting ongoing demands for city services and infrastructure support. Although areas like Back Bay and Downtown/Financial District report fewer requests relative to the top performers, their numbers still exceed 10,000, indicating that no part of the city is without frequent resident needs.
 
 This raises an important question: does the volume of requests in a neighborhood correlate with how quickly they are resolved? Exploring the relationship between neighborhood request density and resolution times can provide valuable insights into the city's resource allocation and service efficiency.
